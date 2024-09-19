@@ -19,15 +19,16 @@ def convert_to(value: float, from_currency: str, to_currency: str = "RUB") -> fl
     if from_currency == "RUB":
         return value
 
-    url = f"https://api.apilayer.com/exchangerates_data/convert?to={to_currency}&from={from_currency}&amount={value}"
-    payload: dict[Any, Any] = {}
+    # url = f"https://api.apilayer.com/exchangerates_data/convert?to={to_currency}&from={from_currency}&amount={value}"
+    url = "https://api.apilayer.com/exchangerates_data/convert"
+    payload: dict[Any, Any] = {"amount": str(value), "from": from_currency, "to": to_currency}
     headers = {"apikey": API_KEY}
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+    response = requests.request("GET", url, headers=headers, params=payload)
 
     status_code = response.status_code
     result = json.loads(response.text)["info"]["rate"]
-
+    print(response.text)
     # Если запрос обработан успешно (код 200), то возвращаем значение валюты после конвертации.
     if status_code == 200:
         return float(result)
