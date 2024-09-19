@@ -16,7 +16,6 @@ class TestConvertTo(unittest.TestCase):
         result = convert_to(100, "USD", "RUB")
         self.assertEqual(result, 75.0)
 
-    # TODO:
     # @patch("requests.request")
     # def test_convert_to_failure(self, mock_request):
     #     """Mock для неудачного ответа"""
