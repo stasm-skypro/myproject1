@@ -1,27 +1,28 @@
-import json
-import unittest
-from unittest.mock import MagicMock, Mock, patch
-
-from src.external_api import convert_to
+from src.utils import read_file
+import pytest
 
 
-class TestConvertTo(unittest.TestCase):
-    @patch("requests.request")
-    def test_convert_to_success(self, mock_request: MagicMock) -> None:
-        """Mock для успешного ответа"""
-        mock_response = Mock()
-        mock_response.status_code = 200
-        mock_response.text = json.dumps({"info": {"rate": 75.0}})
-        mock_request.return_value = mock_response
-        result = convert_to(100, "USD", "RUB")
-        self.assertEqual(result, 75.0)
-
-    # @patch("requests.request")
-    # def test_convert_to_failure(self, mock_request):
-    #     """Mock для неудачного ответа"""
-    #     mock_response = Mock()
-    #     mock_response.status_code = 400
-    #     mock_response.reason = "Bad Request"
-    #     mock_request.return_value = mock_response
-    #     result = convert_to(100, "USD", "RUB")
-    #     self.assertEqual(result, "Bad Request")
+@pytest.mark.parametrize(
+    "x, expected",
+    [
+        ("bad/path", []),
+        ("data_for_tests/operations_empty_sample.json", []),
+        ("data_for_tests/operations_notlist_sample.json", []),
+        (
+            "data_for_tests/operations_sample.json",
+            [
+                {
+                    "id": 441945886,
+                    "state": "EXECUTED",
+                    "date": "2019-08-26T10:50:58.294041",
+                    "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+                    "description": "Перевод организации",
+                    "from": "Maestro 1596837868705199",
+                    "to": "Счет 64686473678894779589",
+                }
+            ],
+        ),
+    ],
+)
+def test_read_file(x: str, expected: list):
+    assert read_file(x) == expected

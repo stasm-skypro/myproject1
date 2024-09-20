@@ -26,9 +26,9 @@ def test_log11() -> None:
 def test_log12() -> None:
     """Проверяет что декоратор log записывает в файл сообщение при возникновении исключения."""
     with pytest.raises(TypeError, match=r".*Неверный тип или количество аргументов.*"):
-        log("log.txt")(my_func1)(1111111111, "00000000000")
+        log("data_for_tests/log_sample.txt")(my_func1)(1111111111, "00000000000")
 
-    with open("log.txt", "r", encoding="utf-8") as file:
+    with open("data_for_tests/log_sample.txt", "r", encoding="utf-8") as file:
         content = file.readlines()
         assert (
             content[-1]
@@ -63,11 +63,11 @@ def test_log_stdout11(capsys: Any) -> None:
 
 def test_log_stdout12(capsys: Any) -> None:
     """Проверяет что декоратор log записывает в файл сообщение при успешном выполнении."""
-    log("log.txt")(my_func1)("1111111111", "00000000000")
+    log("data_for_tests/log_sample.txt")(my_func1)("1111111111", "00000000000")
     captured = capsys.readouterr()
     assert captured.out == "my_func1 OK, результат: 0b1111111111\n"
 
-    with open("log.txt", "r", encoding="utf-8") as file:
+    with open("data_for_tests/log_sample.txt", "r", encoding="utf-8") as file:
         content = file.readlines()
         print(content[-1])
         assert content[-1] == "my_func1 OK, результат: 0b1111111111\n"
