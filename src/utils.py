@@ -1,7 +1,4 @@
 import json
-from typing import Any
-
-from src.external_api import convert_to
 
 
 def read_file(file_path: str) -> list[dict | None]:
@@ -29,30 +26,17 @@ def read_file(file_path: str) -> list[dict | None]:
     return data
 
 
-def get_amount(transaction: dict) -> float | Any:
-    """Принимает на вход транзакцию и возвращает сумму транзакции в рублях.
-    Пример использования:
-    amount = get_amount(current_transaction)
-    """
-    if transaction["operationAmount"]["currency"]["code"] == "RUB":
-        return transaction["operationAmount"]["amount"]
-    else:
-        return convert_to(transaction["operationAmount"]["amount"], transaction["operationAmount"]["currency"]["code"])
-
-
-if __name__ == "__main__":
-    path_to_operations = "../data/operations.json"
-    result = read_file(path_to_operations)
-    print(result)
-
-    current_transaction = {
-        "id": 41428829,
-        "state": "EXECUTED",
-        "date": "2019-07-03T18:35:29.512364",
-        "operationAmount": {"amount": "8221.37", "currency": {"name": "USD", "code": "USD"}},
-        "description": "Перевод организации",
-        "from": "MasterCard 7158300734726758",
-        "to": "Счет 35383033474447895560",
-    }
-    # amount = get_amount(current_transaction)
-    # print(amount)
+# if __name__ == "__main__":
+#     path_to_operations = "../data/operations.json"
+#     result = read_file(path_to_operations)
+#     print(result)
+#
+#     current_transaction = {
+#         "id": 41428829,
+#         "state": "EXECUTED",
+#         "date": "2019-07-03T18:35:29.512364",
+#         "operationAmount": {"amount": "8221.37", "currency": {"name": "USD", "code": "USD"}},
+#         "description": "Перевод организации",
+#         "from": "MasterCard 7158300734726758",
+#         "to": "Счет 35383033474447895560",
+#     }

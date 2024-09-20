@@ -1,5 +1,6 @@
-from src.utils import read_file
 import pytest
+
+from src.utils import read_file
 
 
 @pytest.mark.parametrize(
@@ -24,5 +25,5 @@ import pytest
         ),
     ],
 )
-def test_read_file(x: str, expected: list):
+def test_read_file(x: str, expected: list) -> None:
     assert read_file(x) == expected
