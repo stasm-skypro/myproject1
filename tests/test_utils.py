@@ -16,7 +16,7 @@ def test_read_file_failure(x: str, expected: list) -> None:
     assert read_file(x) == expected
 
 
-def test_read_file_success():
+def test_read_file_success() -> None:
     assert read_file(os.path.dirname(__file__) + "/data_for_tests/operations_sample.json") == [
         {
             "id": 441945886,
