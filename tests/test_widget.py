@@ -12,55 +12,55 @@ from src.widget import get_date, mask_account_card
     ],
 )
 def test_mask_account_card(x: str, expected: str) -> None:
-    """Тестируем функцию mask_account_card - стандартные входные данные."""
+    """Тестируем функцию mask_account_card - корректные входные данные."""
     assert mask_account_card(x) == expected
 
 
 def test_test_mask_account_card_rise_exception11() -> None:
     """Тестируем функцию mask_account_card - поле с номером карты пустое."""
-    with pytest.raises(ValueError, match="Поле с номером карты не должно быть пустым!"):
+    with pytest.raises(ValueError, match="Поле с номером карты или номером счёта не должно быть пустым!"):
         mask_account_card("")
 
 
 def test_test_mask_account_card_rise_exception12() -> None:
     """Тестируем функцию mask_account_card - поле с номером карты пустое."""
-    with pytest.raises(ValueError, match="Поле с номером карты не должно быть пустым!"):
+    with pytest.raises(ValueError, match="Поле с номером карты или номером счёта не должно быть пустым!"):
         mask_account_card(" ")
 
 
 def test_test_mask_account_card_rise_exception13() -> None:
     """Тестируем функцию mask_account_card - поле с номером карты неправильно заполнено."""
-    with pytest.raises(ValueError, match="Поле с номером карты должно быть правильно заполнено!"):
+    with pytest.raises(ValueError, match="Поле карты должно быть правильно заполнено!"):
         mask_account_card("Ma stro 1596837868705199")
 
 
 def test_test_mask_account_card_rise_exception14() -> None:
     """Тестируем функцию mask_account_card - поле с номером карты неправильно заполнено."""
-    with pytest.raises(ValueError, match="Поле с номером карты должно быть правильно заполнено!"):
+    with pytest.raises(ValueError, match="Поле карты должно быть правильно заполнено!"):
         mask_account_card("Visa-Classic 1596837868705199")
 
 
 def test_test_mask_account_card_rise_exception15() -> None:
     """Тестируем функцию mask_account_card - поле с номером карты неправильно заполнено."""
-    with pytest.raises(ValueError, match="Поле с номером карты должно быть правильно заполнено!"):
+    with pytest.raises(ValueError, match="Поле карты должно быть правильно заполнено!"):
         mask_account_card("VisaClassic 1596837868705199")
 
 
 def test_test_mask_account_card_rise_exception16() -> None:
     """Тестируем функцию mask_account_card - поле с номером карты неправильно заполнено."""
-    with pytest.raises(ValueError, match="Поле с номером карты должно быть правильно заполнено!"):
+    with pytest.raises(ValueError, match="Поле карты должно быть правильно заполнено!"):
         mask_account_card("VC 1596837868705199")
 
 
 def test_test_mask_account_card_rise_exception21() -> None:
     """Тестируем функцию mask_account_card - поле с номером карты неправильно заполнено."""
-    with pytest.raises(ValueError, match="Поле с номером карты должно быть правильно заполнено!"):
+    with pytest.raises(ValueError, match="Номер карты должен содержать цифры от 0 до 9"):
         mask_account_card("Visa Classic")
 
 
 def test_test_mask_account_card_rise_exception25() -> None:
     """Тестируем функцию mask_account_card - поле с номером карты неправильно заполнено."""
-    with pytest.raises(ValueError, match="Поле с номером карты должно быть правильно заполнено!"):
+    with pytest.raises(ValueError, match="Номер карты должен содержать цифры от 0 до 9"):
         mask_account_card("Visa Classic ")
 
 
