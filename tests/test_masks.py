@@ -16,7 +16,7 @@ from src.masks import get_mask_account, get_mask_card_number
     ],
 )
 def test_get_mask_card_number(x: str, expected: str) -> None:
-    """Тестируем функцию get_mask_card_number - номер карты правильной длины."""
+    """Тестируем функцию get_mask_card_number - номер карты корректный."""
     assert get_mask_card_number(x) == expected
 
 
@@ -34,7 +34,13 @@ def test_get_mask_card_number_raise_exception2() -> None:
 
 def test_get_mask_card_number_raise_exception3() -> None:
     """Тестируем функцию get_mask_card_number - номер карты пустой"""
-    with pytest.raises(ValueError, match=".* 16 .*"):
+    with pytest.raises(ValueError, match="Номер карты должен содержать цифры от 0 до 9"):
+        get_mask_card_number("")
+
+
+def test_get_mask_card_number_raise_exception4() -> None:
+    """Тестируем функцию get_mask_card_number - номер карты содержит недопустимые символы"""
+    with pytest.raises(ValueError, match="Номер карты должен содержать цифры от 0 до 9"):
         get_mask_card_number("")
 
 
@@ -69,5 +75,11 @@ def test_get_mask_account_raise_exception2() -> None:
 
 def test_get_mask_account_raise_exception3() -> None:
     """Тестируем функцию get_mask_account - номер счёта пустой"""
-    with pytest.raises(ValueError, match=".* 20 .*"):
+    with pytest.raises(ValueError, match="Номер счёта должен содержать цифры от 0 до 9"):
+        get_mask_account("")
+
+
+def test_get_mask_account_raise_exception4() -> None:
+    """Тестируем функцию get_mask_account - номер счёта содержит недопустимые символы"""
+    with pytest.raises(ValueError, match="Номер счёта должен содержать цифры от 0 до 9"):
         get_mask_account("")
