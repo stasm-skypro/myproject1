@@ -8,16 +8,16 @@ from src.utils import read_file
     "x, expected",
     [
         ("bad/path", []),
-        ("tests/data_for_tests/operations_empty_sample.json", []),
-        ("tests/data_for_tests/operations_notlist_sample.json", []),
+        (os.path.dirname(__file__) + "/data_for_tests/operations_empty_sample.json", []),
+        (os.path.dirname(__file__) + "/data_for_tests/operations_notlist_sample.json", []),
     ],
 )
 def test_read_file_failure(x: str, expected: list) -> None:
     assert read_file(x) == expected
 
 
-def test_read_file_success():
-    assert read_file("tests/data_for_tests/operations_sample.json") == [
+def test_read_file_success() -> None:
+    assert read_file(os.path.dirname(__file__) + "/data_for_tests/operations_sample.json") == [
         {
             "id": 441945886,
             "state": "EXECUTED",
