@@ -36,16 +36,16 @@ def _convert_to(value: float, from_currency: str, to_currency: str = "RUB") -> f
         return response.reason
 
 
-def convert_to_rub(transaction: dict) -> float | Any:
+def convert_to_rub(transaction: dict) -> float:
     """Принимает на вход транзакцию и возвращает сумму транзакции в рублях.
     Пример использования:
     amount = convert_to_rub(current_transaction)
     print(amount)
     """
     from_currency = transaction["operationAmount"]["currency"]["code"]
-    # Если сумма (amount) внутри трансакции уже в рублях, то конвертация не нужна, возращаем сумму.
+    # Если сумма (amount) внутри трансакции уже в рублях, то конвертация не нужна, возвращаем сумму.
     if from_currency == "RUB":
-        return transaction["operationAmount"]["amount"]
+        return float(transaction["operationAmount"]["amount"])
 
     # Иначе обращаемся к внешнему API за конвертацией.
     else:
@@ -54,36 +54,25 @@ def convert_to_rub(transaction: dict) -> float | Any:
         )
 
 
-# if __name__ == "__main__":
-#     current_transaction = {
-#         "id": 441945886,
-#         "state": "EXECUTED",
-#         "date": "2019-08-26T10:50:58.294041",
-#         "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
-#         "description": "Перевод организации",
-#         "from": "Maestro 1596837868705199",
-#         "to": "Счет 64686473678894779589",
-#     }
-#     print("RUB:", convert_to_rub(current_transaction))
-#
-#     current_transaction = {
-#         "id": 41428829,
-#         "state": "EXECUTED",
-#         "date": "2019-07-03T18:35:29.512364",
-#         "operationAmount": {"amount": "8221.37", "currency": {"name": "USD", "code": "USD"}},
-#         "description": "Перевод организации",
-#         "from": "MasterCard 7158300734726758",
-#         "to": "Счет 35383033474447895560",
-#     }
-#     print("USD:", convert_to_rub(current_transaction))
-#
-#     current_transaction = {
-#         "id": 490100847,
-#         "state": "EXECUTED",
-#         "date": "2018-12-22T02:02:49.564873",
-#         "operationAmount": {"amount": "56516.63", "currency": {"name": "EUR", "code": "EUR"}},
-#         "description": "Перевод с карты на карту",
-#         "from": "Visa Gold 8326537236216459",
-#         "to": "MasterCard 6783917276771847",
-#     }
-#     print("EUR:", convert_to_rub(current_transaction))
+if __name__ == "__main__":
+    current_transaction = {
+        "id": 441945886,
+        "state": "EXECUTED",
+        "date": "2019-08-26T10:50:58.294041",
+        "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+        "description": "Перевод организации",
+        "from": "Maestro 1596837868705199",
+        "to": "Счет 64686473678894779589",
+    }
+    print(convert_to_rub(current_transaction))
+
+    current_transaction = {
+        "id": 41428829,
+        "state": "EXECUTED",
+        "date": "2019-07-03T18:35:29.512364",
+        "operationAmount": {"amount": "8221.37", "currency": {"name": "USD", "code": "USD"}},
+        "description": "Перевод организации",
+        "from": "MasterCard 7158300734726758",
+        "to": "Счет 35383033474447895560",
+    }
+    print(convert_to_rub(current_transaction))
