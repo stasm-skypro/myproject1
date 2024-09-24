@@ -39,3 +39,7 @@ def log(filename: str | None = None) -> Any:
         return inner_wrapper
 
     return outer_wrapper
+
+
+if __name__ == "__main__":
+    log("../logs/sample.log")
