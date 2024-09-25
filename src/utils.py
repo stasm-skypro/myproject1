@@ -1,10 +1,19 @@
 import json
 import logging
+import os
+
+# Запуск pytest происходит из корневой директории проекта, а запуск срипта из директории src.
+# Эта конструкция нужна для выравнивания путей.
+path = ""
+if os.getcwd() == "/Users/stanislavmayatsky/python/Skypro/myprojects/myproject1":
+    path = "logs/utils.log"
+elif os.getcwd() == "/Users/stanislavmayatsky/python/Skypro/myprojects/myproject1/src":
+    path = "../logs/utils.log"
 
 # Базовые настройки логгера
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("logs/utils.log", "w")
+file_handler = logging.FileHandler(path, "w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 
 file_handler.setFormatter(file_formatter)
@@ -39,3 +48,7 @@ def read_file(file_path: str) -> list[dict | None]:
         return []
 
     return data
+
+
+if __name__ == "__main__":
+    print(read_file("../data_for_tests/operations_empty_sample.json"))

@@ -1,9 +1,18 @@
 import logging
+import os
+
+# Запуск pytest происходит из корневой директории проекта, а запуск срипта из директории src.
+# Эта конструкция нужна для выравнивания путей.
+path = ""
+if os.getcwd() == "/Users/stanislavmayatsky/python/Skypro/myprojects/myproject1":
+    path = "logs/masks.log"
+elif os.getcwd() == "/Users/stanislavmayatsky/python/Skypro/myprojects/myproject1/src":
+    path = "../logs/masks.log"
 
 # Базовые настройки логгера
 logger = logging.getLogger("masks")
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("logs/masks.log", "w")
+file_handler = logging.FileHandler(path, "w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 
 file_handler.setFormatter(file_formatter)
@@ -49,3 +58,8 @@ def get_mask_account(account_number: str) -> str:
 
     logger.info(f"Маска для номера счёта {account_number} создана.")
     return "**" + account_number[-4:]
+
+
+if __name__ == "__main__":
+    print(get_mask_account("12345678912345678912"))
+    print(get_mask_card_number("1234567891234567"))
