@@ -2,7 +2,7 @@ import json
 import unittest
 from unittest.mock import Mock, patch
 
-from src.external_api import _convert_to, convert_to_rub
+from src.external_api import _convert_to
 
 
 class TestConvertTo(unittest.TestCase):

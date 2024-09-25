@@ -1,5 +1,6 @@
-import pytest
 import os
+
+import pytest
 
 from src.utils import read_file
 

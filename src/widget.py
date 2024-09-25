@@ -1,11 +1,21 @@
-from src.masks import get_mask_account, get_mask_card_number
 import logging
+import os
+
+from src.masks import get_mask_account, get_mask_card_number
+
+# Запуск pytest происходит из корневой директории проекта, а запуск срипта из директории src.
+# Эта конструкция нужна для выравнивания путей.
+path = ""
+if os.getcwd() == "/Users/stanislavmayatsky/python/Skypro/myprojects/myproject1":
+    path = "logs/widget.log"
+elif os.getcwd() == "/Users/stanislavmayatsky/python/Skypro/myprojects/myproject1/src":
+    path = "../logs/widget.log"
 
 
 # Базовые настройки логгера
 logger = logging.getLogger("widget")
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("logs/widget.log", "w")
+file_handler = logging.FileHandler(path, "w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
 
 file_handler.setFormatter(file_formatter)
@@ -58,3 +68,9 @@ def get_date(current_date: str) -> str:
     формате "ДД.ММ.ГГГГ" ("11.03.2024")."""
     year, month, day = tuple(current_date[:11].split("-"))
     return ".".join([day.replace("T", ""), month, year])
+
+
+if __name__ == "__main__":
+    print(mask_account_card("Visa Classic 6831982476737658"))
+    print(mask_account_card("Счет 64686473678894779589"))
+    print(get_date("2024-03-11T02:26:18.671407"))
