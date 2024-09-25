@@ -1,7 +1,7 @@
-from src.masks import get_mask_account, get_mask_card_number
 import logging
 import os
 
+from src.masks import get_mask_account, get_mask_card_number
 
 # Запуск pytest происходит из корневой директории проекта, а запуск срипта из директории src.
 # Эта конструкция нужна для выравнивания путей.

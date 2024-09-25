@@ -36,7 +36,7 @@ def _convert_to(value: float, from_currency: str, to_currency: str = "RUB") -> f
         return response.reason
 
 
-def convert_to_rub(transaction: dict) -> float:
+def convert_to_rub(transaction: dict) -> float | str:
     """Принимает на вход транзакцию и возвращает сумму транзакции в рублях.
     Пример использования:
     amount = convert_to_rub(current_transaction)
