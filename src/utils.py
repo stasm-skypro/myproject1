@@ -1,8 +1,11 @@
 import json
 import logging
 import os
+import re
 
-# Запуск pytest происходит из корневой директории проекта, а запуск срипта из директории src.
+from mypyc.irbuild.prepare import prepare_methods_and_attributes
+
+# Запуск pytest происходит из корневой директории проекта, а запуск скрипта из директории src.
 # Эта конструкция нужна для выравнивания путей.
 path = ""
 if os.getcwd() == "/Users/stanislavmayatsky/python/Skypro/myprojects/myproject1":
@@ -50,5 +53,44 @@ def read_file(file_path: str) -> list[dict | None]:
     return data
 
 
+def find_transactions(transactions_list: list[dict], key_string: str) -> list[dict]:
+    """Принимает список словарей с данными о банковских операциях и строку поиска. Возвращает список словарей, у \
+    которых в описании есть данная строка."""
+    templates = [
+        "Перевод с карты на карту",
+        "Перевод организации",
+        "Перевод со счета на счет",
+        "Открытие вклада",
+        "Перевод с карты на счет",
+    ]
+    key_list = []
+    pattern = re.compile(key_string)
+    for temp in templates:
+        if re.search(pattern, temp):
+            key_list.append(temp)
+
+    filtered_transactions_list = []
+    for key in key_list:
+        for transaction in transactions_list:
+            if transaction.get("description") != key:
+                continue
+            filtered_transactions_list.append(transaction)
+
+    return filtered_transactions_list
+
+
+def filter_transactions_by_category(transactions_list: list[dict]) -> list[dict]:
+    """Принимает список словарей с данными о банковских операциях и список категорий операций, а возвращать словарь, \
+    в котором ключи — это названия категорий, а значения — это количество операций в каждой категории."""
+    pass
+
+
 if __name__ == "__main__":
-    print(read_file("../data_for_tests/operations_empty_sample.json"))
+    transactions = read_file("../data/operations.json")
+    # print(find_transactions(transactions, "Перевод с карты на карту"))
+    # print(find_transactions(transactions, "Перевод организации"))
+    # print(find_transactions(transactions, "Перевод со счета на счет"))
+    # print(find_transactions(transactions, "Открытие вклада"))
+    # print(find_transactions(transactions, "Перевод с карты на счет"))
+    # print(find_transactions(transactions, "Перевод с карты"))
+    print(find_transactions(transactions, "Перевод"))
