@@ -1,9 +1,3 @@
-from src.external_api import convert_to_rub
-from src.processing import filter_by_state, sort_by_date
-from src.utils import read_file
-from src.widget import get_date, mask_account_card
-
-
 def pretty_print(lst: list) -> None:
     """Функция распечатывает двумерный список по-строчно."""
     for row in lst:

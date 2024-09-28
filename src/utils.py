@@ -3,7 +3,6 @@ import logging
 import os
 import re
 
-from mypyc.irbuild.prepare import prepare_methods_and_attributes
 
 # Запуск pytest происходит из корневой директории проекта, а запуск скрипта из директории src.
 # Эта конструкция нужна для выравнивания путей.
@@ -79,18 +78,75 @@ def find_transactions(transactions_list: list[dict], key_string: str) -> list[di
     return filtered_transactions_list
 
 
-def filter_transactions_by_category(transactions_list: list[dict]) -> list[dict]:
+def filter_transactions_by_category(transactions_list: list[dict]) -> dict:
     """Принимает список словарей с данными о банковских операциях и список категорий операций, а возвращать словарь, \
     в котором ключи — это названия категорий, а значения — это количество операций в каждой категории."""
-    pass
+    grouped_transactions = {}
+    for transaction in transactions_list:
+        category = transaction.get("description")
+        if category is not None:
+            if category not in grouped_transactions:
+                grouped_transactions[category] = 0
+            grouped_transactions[category] += 1
+
+    return grouped_transactions
 
 
 if __name__ == "__main__":
     transactions = read_file("../data/operations.json")
-    # print(find_transactions(transactions, "Перевод с карты на карту"))
+    # transactions = [
+    #     {
+    #         "id": 441945886,
+    #         "state": "EXECUTED",
+    #         "date": "2019-08-26T10:50:58.294041",
+    #         "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+    #         "description": "Перевод организации",
+    #         "from": "Maestro 1596837868705199",
+    #         "to": "Счет 64686473678894779589",
+    #     },
+    #     {
+    #         "id": 587085106,
+    #         "state": "EXECUTED",
+    #         "date": "2018-03-23T10:45:06.972075",
+    #         "operationAmount": {"amount": "48223.05", "currency": {"name": "руб.", "code": "RUB"}},
+    #         "description": "Открытие вклада",
+    #         "to": "Счет 41421565395219882431",
+    #     },
+    #     {
+    #         "id": 142264268,
+    #         "state": "EXECUTED",
+    #         "date": "2019-04-04T23:20:05.206878",
+    #         "operationAmount": {"amount": "79114.93", "currency": {"name": "USD", "code": "USD"}},
+    #         "description": "Перевод со счета на счет",
+    #         "from": "Счет 19708645243227258542",
+    #         "to": "Счет 75651667383060284188",
+    #     },
+    #     {
+    #         "id": 895315941,
+    #         "state": "EXECUTED",
+    #         "date": "2018-08-19T04:27:37.904916",
+    #         "operationAmount": {"amount": "56883.54", "currency": {"name": "USD", "code": "USD"}},
+    #         "description": "Перевод с карты на карту",
+    #         "from": "Visa Classic 6831982476737658",
+    #         "to": "Visa Platinum 8990922113665229",
+    #     },
+    #     {
+    #         "id": 615064591,
+    #         "state": "CANCELED",
+    #         "date": "2018-10-14T08:21:33.419441",
+    #         "operationAmount": {"amount": "77751.04", "currency": {"name": "руб.", "code": "RUB"}},
+    #         "description": "Перевод с карты на счет",
+    #         "from": "Maestro 3928549031574026",
+    #         "to": "Счет 84163357546688983493",
+    #     },
+    # ]
+
+    print(find_transactions(transactions, "Перевод с карты на карту"))
     # print(find_transactions(transactions, "Перевод организации"))
     # print(find_transactions(transactions, "Перевод со счета на счет"))
     # print(find_transactions(transactions, "Открытие вклада"))
     # print(find_transactions(transactions, "Перевод с карты на счет"))
     # print(find_transactions(transactions, "Перевод с карты"))
-    print(find_transactions(transactions, "Перевод"))
+    # print(find_transactions(transactions, "Перевод"))
+
+    print(filter_transactions_by_category(transactions))
