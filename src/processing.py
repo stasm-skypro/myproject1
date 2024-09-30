@@ -13,7 +13,7 @@ elif os.getcwd() == "/Users/stanislavmayatsky/python/Skypro/myprojects/myproject
     path = "../logs/processing.log"
 
 # Базовые настройки логгера
-logger = logging.getLogger("utils")
+logger = logging.getLogger("processing")
 logger.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler(path, "w")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
