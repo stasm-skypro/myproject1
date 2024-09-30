@@ -14,10 +14,12 @@ from src.utils import read_file
     ],
 )
 def test_read_file_failure(x: str, expected: list) -> None:
+    """Тестируем функцию read_file с невалидным аргументом."""
     assert read_file(x) == expected
 
 
 def test_read_file_success() -> None:
+    """Тестируем функцию read_file с валидным аргументом."""
     assert read_file(os.path.dirname(__file__) + "/data_for_tests/operations_sample.json") == [
         {
             "id": 441945886,
