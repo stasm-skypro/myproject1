@@ -50,6 +50,8 @@ def mask_account_card(name: str) -> str:
         "visa",
         "visa classic",
         "visa platinum",
+        "visa gold",
+        "мир",
     ):
         # Это карта, вызываем функцию get_mask_card_number
         logger.info(f"{name} содержит имя и номер карты. Маскируем номер.")
